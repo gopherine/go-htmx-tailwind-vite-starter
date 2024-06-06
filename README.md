@@ -175,3 +175,7 @@ make air
 ```
 make run
 ```
+
+credits:
+
+The base structure is inspired by Anthony's video so big shoutout, please do visit his channel https://www.youtube.com/watch?v=1dqp1s72Z8E
