@@ -1,0 +1,24 @@
+package layouts
+
+import "github.com/goemon/views/components"
+
+templ Base() {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Goemon</title>
+			<link rel="icon" type="image/x-icon" href="/public/favicon.ico"/>
+			<link rel="stylesheet" href="/public/global.css"/>
+		</head>
+		<body>
+			@components.Navigation()
+			{ children... }
+		</body>
+		<!-- Include the JS on your page -->
+		<script src="https://unpkg.com/alpinejs" defer></script>
+		<script src="https://unpkg.com/htmx.org@1.9.12"></script>
+	</html>
+}
