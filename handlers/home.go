@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/goemon/views/home"
+	"github.com/golang_starter/views/home"
 	"github.com/labstack/echo/v4"
 )
 

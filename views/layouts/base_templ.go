@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-import "github.com/goemon/views/components"
+import "github.com/golang_starter/views/components"
 
 func Base() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
@@ -25,7 +25,7 @@ func Base() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Goemon</title><link rel=\"icon\" type=\"image/x-icon\" href=\"/public/favicon.ico\"><link rel=\"stylesheet\" href=\"/public/global.css\"></head><body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>golang_starter</title><link rel=\"icon\" type=\"image/x-icon\" href=\"/public/favicon.ico\"><link rel=\"stylesheet\" type=\"text/css\" href=\"/public/assets/global.css\"></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -37,7 +37,7 @@ func Base() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><!-- Include the JS on your page --><script src=\"https://unpkg.com/alpinejs\" defer></script><script src=\"https://unpkg.com/htmx.org@1.9.12\"></script></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><!-- Include the JS on your page --><script type=\"module\">\n\t\t\tasync function loadScriptByManifest(entryName) {\n\t\t\t// Adjust the path to fetch the manifest from the correct location\n\t\t\tconst response = await fetch('/public/.vite/manifest.json');\n\t\t\tconst manifest = await response.json();\n\t\t\tif (manifest[entryName]) {\n\t\t\t\tconst scriptPath = manifest[entryName].file;\n\t\t\t\tconst script = document.createElement('script');\n\t\t\t\tscript.type = 'module';\n\t\t\t\tscript.src = `/public/${scriptPath}`;\n\t\t\t\tdocument.head.appendChild(script);\n\t\t\t} else {\n\t\t\t\tconsole.error(`Entry ${entryName} not found in manifest`);\n\t\t\t}\n\t\t\t}\n\t\t\t\n\t\t\t// Call the function to load the main entry script\n\t\t\tloadScriptByManifest('views/scripts/index.ts');\n\t\t</script><script src=\"https://unpkg.com/alpinejs\" defer></script><script src=\"https://unpkg.com/htmx.org@1.9.12\"></script></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

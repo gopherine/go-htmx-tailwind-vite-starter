@@ -126,6 +126,21 @@ make templ
 make css
 ```
 
+### vite modules
+
+```bash
+make vite
+```
+
+We have bundled js for module support and partial rendering and loading js files via vite
+
+```html
+<div id="output" data-module="module"></div>
+```
+
+We use data-module attribute to tell that particular page or element to notify us that we need to load that particular js file
+this gives us more performance and we can directly install and use npm packages directly on to our templ files.
+
 ### Production
 
 1. Build the application for production

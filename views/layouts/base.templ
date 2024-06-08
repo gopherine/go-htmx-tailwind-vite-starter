@@ -1,6 +1,6 @@
 package layouts
 
-import "github.com/goemon/views/components"
+import "github.com/golang_starter/views/components"
 
 templ Base() {
 	<!DOCTYPE html>
@@ -9,15 +9,34 @@ templ Base() {
 			<meta charset="UTF-8"/>
 			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>Goemon</title>
+			<title>golang_starter</title>
 			<link rel="icon" type="image/x-icon" href="/public/favicon.ico"/>
-			<link rel="stylesheet" href="/public/global.css"/>
+			<link rel="stylesheet" type="text/css" href="/public/assets/global.css"/>
 		</head>
 		<body>
 			@components.Navigation()
 			{ children... }
 		</body>
 		<!-- Include the JS on your page -->
+		<script type="module">
+			async function loadScriptByManifest(entryName) {
+			// Adjust the path to fetch the manifest from the correct location
+			const response = await fetch('/public/.vite/manifest.json');
+			const manifest = await response.json();
+			if (manifest[entryName]) {
+				const scriptPath = manifest[entryName].file;
+				const script = document.createElement('script');
+				script.type = 'module';
+				script.src = `/public/${scriptPath}`;
+				document.head.appendChild(script);
+			} else {
+				console.error(`Entry ${entryName} not found in manifest`);
+			}
+			}
+			
+			// Call the function to load the main entry script
+			loadScriptByManifest('views/scripts/index.ts');
+		</script>
 		<script src="https://unpkg.com/alpinejs" defer></script>
 		<script src="https://unpkg.com/htmx.org@1.9.12"></script>
 	</html>

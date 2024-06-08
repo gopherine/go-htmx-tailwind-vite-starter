@@ -1,4 +1,4 @@
-module github.com/goemon
+module github.com/golang_starter
 
 go 1.22.1
 

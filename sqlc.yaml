@@ -1,6 +1,6 @@
 version: "2"
 project:
-  id: "goemon"
+  id: "golang_starter"
 sql:
   - schema: "infrastructure/postgres/migrations"
     queries: "infrastructure/postgres/query"

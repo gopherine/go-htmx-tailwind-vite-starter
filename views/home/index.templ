@@ -1,9 +1,13 @@
 package home
 
-import "github.com/goemon/views/layouts"
+import "github.com/golang_starter/views/layouts"
 
 templ Index() {
 	@layouts.Base() {
-		<div class="text-xl text-blue-500">Hello from home page</div>
+		<div class="text-xl text-blue-500">
+			<h1>Testing Home</h1>
+			<div id="output" data-module="module"></div>
+			<button id="load-module-button">Load Module</button>
+		</div>
 	}
 }

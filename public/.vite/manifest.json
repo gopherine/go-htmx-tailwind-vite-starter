@@ -1,0 +1,24 @@
+{
+  "___commonjsHelpers__-CZnAS8i4.js": {
+    "file": "assets/__commonjsHelpers__-CZnAS8i4.js",
+    "name": "__commonjsHelpers__"
+  },
+  "views/scripts/index.ts": {
+    "file": "assets/index-EqRdBeMo.js",
+    "name": "index",
+    "src": "views/scripts/index.ts",
+    "isEntry": true,
+    "dynamicImports": [
+      "views/scripts/modules/module.ts"
+    ]
+  },
+  "views/scripts/modules/module.ts": {
+    "file": "assets/module-B_Ihrb4b.js",
+    "name": "module",
+    "src": "views/scripts/modules/module.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "___commonjsHelpers__-CZnAS8i4.js"
+    ]
+  }
+}

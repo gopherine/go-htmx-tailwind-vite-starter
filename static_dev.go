@@ -11,5 +11,5 @@ import (
 
 func public() http.Handler {
 	fmt.Println("Building static files for development")
-	return http.StripPrefix("/public/", http.FileServerFS(os.DirFS("public")))
+	return http.StripPrefix("/public/**/*", http.FileServerFS(os.DirFS("public")))
 }
