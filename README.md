@@ -17,19 +17,13 @@ This project is a starter template for a web application built with Go. It inclu
 ├── handlers
 │   ├── home.go             # HTTP handler for the home route
 │   └── shared.go           # Shared HTTP handlers or middleware
-├── infrastructure
-│   └── postgres
-│       └── migrations      # Database migration files for Golang-Migrate
-├── internals               # Internal application logic and domain-specific code
 ├── main.go                 # Main application entry point
 ├── package.json            # Node.js package file for managing JavaScript dependencies
 ├── public
 │   └── global.css          # Global CSS file for styling
-├── sqlc.yaml               # Configuration file for SQLC code generation
 ├── static_dev.go           # Development-specific static file handling
 ├── static_prod.go          # Production-specific static file handling
 ├── tailwind.config.js      # Configuration file for Tailwind CSS
-├── pkg                     # lib or utils directory
 ├── tools.go                # Go file to track development tools as dependencies
 └── views
     ├── components
@@ -54,7 +48,6 @@ This project is a starter template for a web application built with Go. It inclu
     •	Air (for live reloading in development)
     •	Templ (for HTML templating)
     •	Tailwind CSS (for styling)
-    •	SQLC (for SQL code generation)
     •	Golang-Migrate (for database migrations)
 
 ### Installation
