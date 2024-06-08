@@ -29,9 +29,7 @@ This project is a starter template for a web application built with Go. It inclu
 ├── static_dev.go           # Development-specific static file handling
 ├── static_prod.go          # Production-specific static file handling
 ├── tailwind.config.js      # Configuration file for Tailwind CSS
-├── tmp
-│   ├── build-errors.log    # Log file for build errors
-│   └── main                # Temporary build artifacts directory
+├── pkg                     # lib or utils directory
 ├── tools.go                # Go file to track development tools as dependencies
 └── views
     ├── components
