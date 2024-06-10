@@ -1,4 +1,4 @@
-# Golang HTMX Tailwind Alpine Starter
+# Golang HTMX Tailwind Alpine Vite Starter
 
 ## Overview
 
