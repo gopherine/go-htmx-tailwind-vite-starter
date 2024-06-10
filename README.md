@@ -28,12 +28,13 @@ This project is a starter template for a web application built with Go. It inclu
 └── views
     ├── components
     │   ├── navigation.templ     # Templ template for navigation component
+    │   ├── ui                   # this directory will contain all microcomponents like ( button, card and so on mainly for component libraries)
     │   └── navigation_templ.go  # Go file for navigation component logic
     ├── css
     │   └── global.css           # CSS file for styling the application
-    ├── home
-    │   ├── index.templ          # Templ template for the home page
-    │   └── index_templ.go       # Go file for home page logic
+    ├── pages                    # all your pages will go in this package
+    │   └── home         # Templ template for the home page
+    │       └── index_templ.go       # Go file for home page logic
     └── layouts
         ├── base.templ           # Templ template for the base layout
         └── base_templ.go        # Go file for base layout logic
