@@ -44,7 +44,7 @@ This project is a starter template for a web application built with Go. It inclu
 
 ### Prerequisites
 
-    •	Go 1.16 or later
+    •	Go 1.20 or later
     •	Node.js and npm
     •	Air (for live reloading in development)
     •	Templ (for HTML templating)
