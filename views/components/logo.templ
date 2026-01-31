@@ -1,0 +1,59 @@
+package components
+
+templ Logo() {
+	<div class="flex items-center gap-4">
+		<svg class="h-14 w-14" viewBox="0 0 120 120" role="img" aria-label="Teddy logo">
+			<defs>
+			<radialGradient id="teddyGlow" cx="35%" cy="30%" r="70%">
+					<stop offset="0%" stop-color="#f6c58b"/>
+					<stop offset="100%" stop-color="#d98f4b"/>
+				</radialGradient>
+			</defs>
+			<circle cx="60" cy="60" r="48" fill="url(#teddyGlow)"/>
+			<circle cx="28" cy="38" r="14" fill="#d98f4b"/>
+			<circle cx="92" cy="38" r="14" fill="#d98f4b"/>
+			<circle cx="28" cy="38" r="8" fill="#f4b477"/>
+			<circle cx="92" cy="38" r="8" fill="#f4b477"/>
+			<circle cx="44" cy="50" r="8" fill="#1f2937"/>
+			<circle cx="76" cy="50" r="8" fill="#1f2937"/>
+			<circle cx="41" cy="47" r="3" fill="#ffffff"/>
+			<circle cx="73" cy="47" r="3" fill="#ffffff"/>
+			<ellipse cx="60" cy="72" rx="18" ry="14" fill="#fdf3e5"/>
+			<rect x="54" y="74" width="6" height="10" rx="2" fill="#f8fafc"/>
+			<rect x="60" y="74" width="6" height="10" rx="2" fill="#f8fafc"/>
+			<path d="M50 86c6 4 14 4 20 0" fill="none" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
+			<circle cx="58" cy="66" r="3" fill="#1f2937"/>
+			<circle cx="62" cy="66" r="3" fill="#1f2937"/>
+		</svg>
+		<div>
+			<p class="text-xs uppercase tracking-[0.3em] text-slate-500">Teddy</p>
+			<p class="text-lg font-semibold text-slate-900">Go + HTMX App Kit</p>
+		</div>
+	</div>
+}
+
+templ LogoMark() {
+	<svg class="h-11 w-11" width="44" height="44" viewBox="0 0 120 120" role="img" aria-label="Teddy logo">
+		<defs>
+			<radialGradient id="teddyGlowMark" cx="35%" cy="30%" r="70%">
+				<stop offset="0%" stop-color="#f6c58b"/>
+				<stop offset="100%" stop-color="#d98f4b"/>
+			</radialGradient>
+		</defs>
+		<circle cx="60" cy="60" r="48" fill="url(#teddyGlowMark)"/>
+		<circle cx="28" cy="38" r="14" fill="#d98f4b"/>
+		<circle cx="92" cy="38" r="14" fill="#d98f4b"/>
+		<circle cx="28" cy="38" r="8" fill="#f4b477"/>
+		<circle cx="92" cy="38" r="8" fill="#f4b477"/>
+		<circle cx="44" cy="50" r="8" fill="#1f2937"/>
+		<circle cx="76" cy="50" r="8" fill="#1f2937"/>
+		<circle cx="41" cy="47" r="3" fill="#ffffff"/>
+		<circle cx="73" cy="47" r="3" fill="#ffffff"/>
+		<ellipse cx="60" cy="72" rx="18" ry="14" fill="#fdf3e5"/>
+		<rect x="54" y="74" width="6" height="10" rx="2" fill="#f8fafc"/>
+		<rect x="60" y="74" width="6" height="10" rx="2" fill="#f8fafc"/>
+		<path d="M50 86c6 4 14 4 20 0" fill="none" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
+		<circle cx="58" cy="66" r="3" fill="#1f2937"/>
+		<circle cx="62" cy="66" r="3" fill="#1f2937"/>
+	</svg>
+}

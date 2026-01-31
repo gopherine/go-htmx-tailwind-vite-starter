@@ -1,24 +1,28 @@
 package layouts
 
-import "github.com/golang_starter/views/components"
+import (
+	"github.com/golang_starter/internal/assets"
+	"github.com/golang_starter/views/components"
+)
 
-templ Base() {
+templ Base(content templ.Component) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>golang_starter</title>
+			<title>teddy</title>
 			<link rel="icon" type="image/x-icon" href="/public/favicon.ico"/>
 			<link rel="stylesheet" type="text/css" href="/public/assets/global.css"/>
-			<script type="module" src="/public/assets/module-loader.js"></script>
-			<script src="https://unpkg.com/alpinejs"></script>
+			<script type="module" src={ assets.AssetPath("app") }></script>
 			<script src="https://unpkg.com/htmx.org@1.9.12"></script>
 		</head>
-		<body>
+		<body hx-boost="true" hx-target="#app" hx-swap="innerHTML">
 			@components.Navigation()
-			{ children... }
+			<main id="app">
+				@content
+			</main>
 		</body>
 	</html>
 }

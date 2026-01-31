@@ -1,8 +1,14 @@
 {
   "type": "module",
-  "dependencies": { "lodash": "^4.17.21" },
   "devDependencies": {
-    "tailwindcss": "^3.4.4",
-    "vite": "^5.2.13"
+    "@tailwindcss/cli": "^4.1.18",
+    "esbuild": "^0.27.2",
+    "tailwindcss": "^4.1.18"
+  },
+  "scripts": {
+    "gen:modules": "node scripts/gen-modules.mjs",
+    "dev:assets": "node scripts/esbuild.mjs --watch",
+    "build:assets": "node scripts/esbuild.mjs --minify",
+    "typecheck": "tsc --noEmit"
   }
 }

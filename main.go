@@ -3,45 +3,44 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
 
-	"github.com/golang_starter/handlers"
+	"github.com/golang_starter/internal/assets"
+	"github.com/golang_starter/internal/routes"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal(err)
-	}
+	_ = godotenv.Load()
 
 	// Echo instance
 	e := echo.New()
 
-	e.GET("/", func(c echo.Context) error {
-		time.Sleep(5 * time.Second)
-		return c.JSON(http.StatusOK, "OK")
-	})
+	assets.SetFS(PublicFS)
 
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/*", echo.WrapHandler(http.FileServer(http.FS(PublicFS))))
-	e.GET("/", handlers.Make(handlers.Hello))
+	e.GET("/public/*", echo.WrapHandler(http.StripPrefix("/public/", http.FileServer(http.FS(PublicFS)))))
+	routes.RegisterAll(e)
 
 	// Start server
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 	// Start server
 	go func() {
-		if err := e.Start(fmt.Sprintf(":%s", os.Getenv("LISTEN_ADDR"))); err != nil && err != http.ErrServerClosed {
+		port := os.Getenv("LISTEN_ADDR")
+		if port == "" {
+			port = "1323"
+		}
+		if err := e.Start(fmt.Sprintf(":%s", port)); err != nil && err != http.ErrServerClosed {
 			e.Logger.Fatal("shutting down the server")
 		}
 	}()

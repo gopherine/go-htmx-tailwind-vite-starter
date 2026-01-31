@@ -5,12 +5,19 @@ package main
 
 import (
 	"embed"
-	"net/http"
+	"io/fs"
+	"log"
 )
 
-//go:embed public/**/*
-var PublicFS embed.FS
+//go:embed public
+var embeddedPublic embed.FS
 
-func public() http.Handler {
-	return http.FileServerFS(PublicFS)
+var PublicFS fs.FS
+
+func init() {
+	sub, err := fs.Sub(embeddedPublic, "public")
+	if err != nil {
+		log.Fatalf("failed to create embedded public FS: %v", err)
+	}
+	PublicFS = sub
 }

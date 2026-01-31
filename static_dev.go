@@ -4,12 +4,8 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"io/fs"
 	"os"
 )
 
-func public() http.Handler {
-	fmt.Println("Building static files for development")
-	return http.StripPrefix("/public/**/*", http.FileServerFS(os.DirFS("public")))
-}
+var PublicFS fs.FS = os.DirFS("public")

@@ -4,6 +4,7 @@ import (
 	"log/slog"
 
 	"github.com/a-h/templ"
+	"github.com/golang_starter/views/layouts"
 	"github.com/labstack/echo/v4"
 )
 
@@ -28,4 +29,12 @@ func Render(ctx echo.Context, statusCode int, t templ.Component) error {
 	}
 
 	return ctx.HTML(statusCode, buf.String())
+}
+
+func RenderPage(ctx echo.Context, statusCode int, page templ.Component) error {
+	ctx.Response().Header().Add("Vary", "HX-Request")
+	if ctx.Request().Header.Get("HX-Request") == "true" {
+		return Render(ctx, statusCode, page)
+	}
+	return Render(ctx, statusCode, layouts.Base(page))
 }

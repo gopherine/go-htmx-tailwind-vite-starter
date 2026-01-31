@@ -1,188 +1,120 @@
-# Golang HTMX Tailwind Alpine Vite Starter
+# Golang HTMX Tailwind esbuild Starter
 
 ## Overview
 
-This project is a starter template for a web application built with Go. It includes Echo for web routing, Tailwind CSS for styling, Templ for HTML templating, SQLC for SQL code generation, and Golang-Migrate for database migrations. It also uses Air for live reloading in development.
+Starter template for Go + Echo + Templ with HTMX, Tailwind CSS, and esbuild. It includes:
+
+- File-based routing (`views/pages/**/index.templ`).
+- HTMX partial rendering with layout persistence.
+- Small JS islands via `data-module` + esbuild code splitting (see the homepage counter).
+- Embedded static assets in production builds.
 
 ## Project Structure
 
 ```bash
 .
-├── Makefile                # Makefile to manage build tasks and development commands
-├── README.md               # Project documentation
-├── air.toml                # Configuration file for Air live reloading
-├── bun.lockb               # Bun lock file for dependency management (if using Bun)
-├── go.mod                  # Go module file, listing project dependencies
-├── go.sum                  # Go checksum file, ensuring the integrity of dependencies
+├── Makefile
+├── README.md
+├── air.toml
+├── go.mod
+├── go.sum
 ├── handlers
-│   ├── home.go             # HTTP handler for the home route
-│   └── shared.go           # Shared HTTP handlers or middleware
-├── main.go                 # Main application entry point
-├── package.json            # Node.js package file for managing JavaScript dependencies
-├── public
-│   └── global.css          # Global CSS file for styling
-├── static_dev.go           # Development-specific static file handling
-├── static_prod.go          # Production-specific static file handling
-├── tailwind.config.js      # Configuration file for Tailwind CSS
-├── tools.go                # Go file to track development tools as dependencies
-└── views
-    ├── components
-    │   ├── navigation.templ     # Templ template for navigation component
-    │   ├── ui                   # this directory will contain all microcomponents like ( button, card and so on mainly for component libraries)
-    │   └── navigation_templ.go  # Go file for navigation component logic
-    ├── css
-    │   └── global.css           # CSS file for styling the application
-    ├── pages                    # all your pages will go in this package
-    │   └── home         # Templ template for the home page
-    │       └── index_templ.go       # Go file for home page logic
-    └── layouts
-        ├── base.templ           # Templ template for the base layout
-        └── base_templ.go        # Go file for base layout logic
+│   └── shared.go
+├── internal
+│   ├── assets
+│   └── routes
+├── main.go
+├── package.json
+├── scripts
+│   ├── esbuild.mjs
+│   └── gen-modules.mjs
+├── static_dev.go
+├── static_prod.go
+├── tailwind.config.js
+├── tools
+│   ├── tools.go
+│   └── generate_routes
+├── views
+│   ├── components
+│   ├── css
+│   ├── layouts
+│   ├── pages
+│   └── scripts
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-    •	Go 1.20 or later
-    •	Node.js and npm
-    •	Air (for live reloading in development)
-    •	Templ (for HTML templating)
-    •	Tailwind CSS (for styling)
-    •	Golang-Migrate (for database migrations)
+- Go 1.24+
+- Node.js + npm
+- Air (optional, for live reload)
+- Templ (`templ generate` is used for build/dev)
 
-### Installation
-
-1. Clone the repository
-
-```bash
-git clone https://github.com/yourusername/yourprojectname.git
-cd yourprojectname
-```
-
-2. Install go dependencies
+### Install
 
 ```bash
 go mod tidy
-go install
-# Note: if go install does not install every thing from tools.go you will have to install templ, sqlc and golang-migrate manually
-```
-
-```bash
-go install github.com/a-h/templ/cmd/templ@latest
-go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
-go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
-```
-
-To get started clone this template and run
-
-```bash
-yarn install
+pnpm install
 # or
 npm install
 # or
 bun install
 ```
 
-### Configuration
-
-1. Create a .env file for your environment variables.
+### Development
 
 ```bash
-cp .env.example .env
+make dev
 ```
 
-2. Update the .env file with your configuration settings.
-
-### Usage
-
-Development
-
-1. Run the application with Air for live reloading
-
-```bash
-make air
-```
-
-This will run the application in development mode with live reloading using Air, Templ, and Tailwind CSS.
-
-2. If you only generate templates with Templ and Proxy
-
-```bash
-make templ
-```
-
-3. Watch and compile CSS with Tailwind CSS
-
-```bash
-make css
-```
-
-### vite modules
-
-```bash
-make vite
-```
-
-We have bundled js for module support and partial rendering and loading js files via vite
-
-```html
-<div id="output" data-module="module"></div>
-```
-
-We use data-module attribute to tell that particular page or element to notify us that we need to load that particular js file
-this gives us more performance and we can directly install and use npm packages directly on to our templ files.
+This runs:
+- `air` for Go reloads (dev build tag)
+- `templ generate --watch`
+- Tailwind CLI watch
+- esbuild watch + manifest generation
 
 ### Production
 
-1. Build the application for production
-
 ```bash
 make build
-```
-
-2. Run the production build
-
-```bash
 make run
 ```
 
-### Running Migrations
+Production builds embed everything under `public/` into the Go binary.
 
-First you need to write sql native queries in query folder inside `infrastructure/postgres/query`. To run database migrations, use Golang-Migrate with the following command:
+## File-Based Routing
+
+Routes are derived from `views/pages/**/index.templ`:
+
+- `views/pages/index.templ` → `/`
+- `views/pages/blog/index.templ` → `/blog`
+- `views/pages/blog/[id]/index.templ` → `/blog/:id`
+- `views/pages/docs/[...slug]/index.templ` → `/docs/*`
+
+Generate routes with:
 
 ```bash
-migrate -database postgres://user:password@localhost:5432/dbname?sslmode=disable -path ./infrastructure/postgres/migrations up
+make gen
 ```
 
-you will need to compile css for the first time to include it in the binary
+## JS Islands (data-module)
 
-```
-make css
-```
+Add a module file in `views/scripts/modules/` and reference it on the page:
 
-# Migrations
-
-For migrations make sure you have golang-migrate installed
-
-```
-migrate -path repo/migrations -database "postgresql://root:secret@localhost:5432/postgres?sslmode=disable" -verbose up
+```html
+<div data-module="module"></div>
 ```
 
-# To start development server
+When adding new module files, regenerate the registry:
 
-You can access client at port :7331 and backend at :1323
-
-```
-make air
+```bash
+npm run gen:modules
 ```
 
-# To run prod
+esbuild will bundle code-split modules and write `public/manifest.json` for runtime lookup.
 
-```
-make run
-```
+## Starter UI
 
-credits:
-
-The base structure is inspired by Anthony's video so big shoutout, please do visit his channel https://www.youtube.com/watch?v=1dqp1s72Z8E
+The homepage includes a simple counter island and a lightweight "Teddy" logo to mimic a Next.js-style starter screen.
+Edit `views/pages/index.templ` to customize the hero and components.

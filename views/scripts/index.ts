@@ -1,37 +1,44 @@
-//@ts-ignore
-const modules = import.meta.glob('./modules/*.ts');
+import { moduleLoaders, type ModuleName } from "./modules/registry";
 
-async function loadModule(moduleName: string) {
-  const modulePath = `./modules/${moduleName}.ts`;
-  console.log(`Attempting to load module: ${moduleName} from ${modulePath}`);
-  if (modules[modulePath]) {
-    try {
-      const mod = await modules[modulePath]();
-      console.log(`Loaded module: ${moduleName}`, mod);
-      if (mod && mod.default) {
-        console.log("Executing module default export");
-        mod.default();  // Call the default exported function
-      } else {
-        console.error(`Module ${moduleName} does not have a default export`);
-      }
-    } catch (error) {
-      console.error(`Error loading module ${moduleName}:`, error);
+type ModuleInit = (el: HTMLElement) => void;
+
+const initialized = new WeakSet<Element>();
+
+async function initModule(el: HTMLElement, name: ModuleName) {
+  const loader = moduleLoaders[name];
+  if (!loader) {
+    console.error(`Module ${name} not found in registry`);
+    return;
+  }
+
+  try {
+    const mod = await loader();
+    if (mod?.default) {
+      (mod.default as ModuleInit)(el);
     }
-  } else {
-    console.error(`Module ${modulePath} not found`);
+  } catch (error) {
+    console.error(`Error loading module ${name}:`, error);
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("index.ts: DOMContentLoaded event triggered");
-  
-  // Automatically load modules based on data-module attribute
-  const elements = document.querySelectorAll('[data-module]');
-  elements.forEach(element => {
-    const moduleName = element.getAttribute('data-module');
-    if (moduleName) {
-      console.log(`Element with data-module found: ${moduleName}`);
-      loadModule(moduleName);
-    }
+function scanAndInit(root: ParentNode = document) {
+  const elements = root.querySelectorAll<HTMLElement>("[data-module]");
+  elements.forEach((el) => {
+    if (initialized.has(el)) return;
+    const name = el.dataset.module as ModuleName | undefined;
+    if (!name) return;
+    initialized.add(el);
+    initModule(el, name);
   });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  scanAndInit(document);
+});
+
+document.addEventListener("htmx:afterSwap", (event) => {
+  const target = (event as CustomEvent).detail?.target as ParentNode | undefined;
+  if (target) {
+    scanAndInit(target);
+  }
 });
