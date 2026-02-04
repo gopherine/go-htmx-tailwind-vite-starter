@@ -1,11 +1,12 @@
 module github.com/golang_starter
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/a-h/templ v0.3.977
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.15.0
+	github.com/rs/zerolog v1.34.0
 )
 
 require (

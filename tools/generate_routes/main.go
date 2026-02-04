@@ -197,7 +197,7 @@ func writeRoutes(path string, pages []page) error {
 	buf.WriteString("package routes\n\n")
 	buf.WriteString("import (\n")
 	buf.WriteString("\t\"net/http\"\n")
-	buf.WriteString("\t\"github.com/golang_starter/handlers\"\n")
+	buf.WriteString("\t\"github.com/golang_starter/internal/web\"\n")
 	buf.WriteString("\t\"github.com/labstack/echo/v4\"\n")
 	for _, page := range pages {
 		if page.Alias != "" {

@@ -2,7 +2,7 @@
 package routes
 
 import (
-	"github.com/golang_starter/handlers"
+	"github.com/golang_starter/internal/web"
 	pages "github.com/golang_starter/views/pages"
 	pages_docs "github.com/golang_starter/views/pages/docs"
 	"github.com/labstack/echo/v4"
@@ -10,10 +10,10 @@ import (
 )
 
 func Register(e *echo.Echo) {
-	e.GET("/", handlers.Make(func(c echo.Context) error {
-		return handlers.RenderPage(c, http.StatusOK, pages.Page())
+	e.GET("/", web.Make(func(c echo.Context) error {
+		return web.RenderPage(c, http.StatusOK, pages.Page())
 	}))
-	e.GET("/docs", handlers.Make(func(c echo.Context) error {
-		return handlers.RenderPage(c, http.StatusOK, pages_docs.Page())
+	e.GET("/docs", web.Make(func(c echo.Context) error {
+		return web.RenderPage(c, http.StatusOK, pages_docs.Page())
 	}))
 }

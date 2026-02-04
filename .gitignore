@@ -7,3 +7,4 @@ public/.vite/
 .env
 node_modules/
 golang_starter
+.claude
