@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/golang_starter/internal/assets"
@@ -44,7 +45,7 @@ func main() {
 	routes.RegisterAll(e)
 
 	// Start server
-	signalCtx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	signalCtx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
 	go func() {
@@ -59,7 +60,8 @@ func main() {
 	<-signalCtx.Done()
 	logger.Info(ctx, "Shutting down...")
 
-	shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	shutdownTimeout := getShutdownTimeout()
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
 	defer cancel()
 	if err := e.Shutdown(shutdownCtx); err != nil {
 		logger.Error(ctx, "Shutdown error: "+err.Error())
@@ -107,4 +109,13 @@ func getEnv(key, defaultVal string) string {
 		return val
 	}
 	return defaultVal
+}
+
+func getShutdownTimeout() time.Duration {
+	if val := getEnv("SHUTDOWN_TIMEOUT", ""); val != "" {
+		if duration, err := time.ParseDuration(val); err == nil {
+			return duration
+		}
+	}
+	return 10 * time.Second
 }
